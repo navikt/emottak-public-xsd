@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://nav.no/ekstern/virkemiddelokonomi/utbetaling/v1" version="1.0" xmlns:utbetaling="http://nav.no/ekstern/virkemiddelokonomi/utbetaling/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType abstract="true" name="Utvidelse">
+    <xsd:sequence>
+      <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="lax"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="lax"/>
+  </xsd:complexType>
+  <xsd:complexType name="BrukerUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Bruker">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="brukerId" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Fnr/dnr til personen det ønskes utbetalingsinformasjon om.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="brukertypeKode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir typen brukerId. Tjenesten støtter idag kun brukertypen PERSON.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="navn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Fornavn og etternavn på personen objektet representerer.&lt;/p&gt;&lt;p&gt;Merk: For utbetalinger som gjelder dagpenger eller arbeidsavklaringspenger, så vil ikke brukers navn være utfylt.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:BrukerUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PeriodeUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Periode">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="fom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Fra-og-med-dato&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="tom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Til-og-med-dato&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:PeriodeUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TrekkomponentUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Kodetabell">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="kode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;En kort kode.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dekode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Forklaring på koden.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Trekkomponenttype">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Kodetabell">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="utvidelse" type="xsd:anyType"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Trekkomponent">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="bruttobelop" type="xsd:double">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Et beløp som er brukers utbetaling er trukket med.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="trekkomponenttype" type="utbetaling:Trekkomponenttype">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir typen trekkomponent.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:TrekkomponentUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TrekktypeUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Trekktype">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Kodetabell">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:TrekktypeUtvidelse1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TrekkUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Trekk">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="trekktype" type="utbetaling:Trekktype">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir typen trekk, f.eks. refusjon. Hvilke typer trekk den enkelte samhandler har tilgang til å se vil være avgrenset av avtalen mellom NAV og samhandleren.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="trekkperiode" type="utbetaling:Periode">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Perioden dette trekket gjelder.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="trekkomponentListe" type="utbetaling:Trekkomponent">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Liste av trekkomponenter som hører til dette trekket.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:TrekkUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="UtbetalingUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="YtelsestypeUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Ytelsestype">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Kodetabell">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:YtelsestypeUtvidelse1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="YtelseUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="YtelseskomponenttypeUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Ytelseskomponenttype">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Kodetabell">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:YtelseskomponenttypeUtvidelse1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="YtelseskomponentUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Ytelseskomponent">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="bruttobelop" type="xsd:double">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Brutto utbetalt for denne ytelseskomponenten.&lt;/p&gt;&lt;p&gt;Merk: For utbetalinger som gjelder dagpenger og arbeidsavklaringspenger så vil dette beløpet være det beløpet som er beregnet brutto utbetalt i vedtaket, og kan avvike noe fra det faktiske bruttobeløpet (som ligger til grunn for netto utbetalt beløp).&lt;/p&gt;&lt;p&gt;Merk2: Dagpenger og arbeidsavklaringspenger kan også ha barnetillegg, men for disse ytelsene er ikke dette tillegget adskilt fra hovedytelsen. F.eks. vil en bruker som har dagpenger med barnetillegg, ikke få spesifisert størrelsen på de ordinære dagpengene og barnetillegget, men kun det samlede beløpet. For øvrige ytelser vil alle tilleggene returneres som egne ytelseskomponenter, og dermed får man spesifisert beløpsstørrelsen på disse tillegene .  &lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="ytelseskomponenttype" type="utbetaling:Ytelseskomponenttype">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir typen ytelseskomponent.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:YtelseskomponentUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Ytelse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="ytelsetype" type="utbetaling:Ytelsestype">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir typen ytelse. F.eks. alderspensjon, uførepensjon etc.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="ytelsesperiode" type="utbetaling:Periode">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Perioden denne utbetalingen av denne ytelsen &lt;b&gt;gjelder&lt;/b&gt; for. Hvis utbetalingen av f.eks. alderspensjon ble utført i april 2012, men gjaldt mars 2012, så vil ytelsesperioden være 01.03.2012 - 31.03.2012.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="ytelseskomponentListe" type="utbetaling:Ytelseskomponent">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;En liste av de ytelseskomponenter som tilhører denne ytelsen.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:YtelseUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Utbetaling">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="utbetalingsdato" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Datoen utbetalingen ble effektuert i bank.&lt;/p&gt;&lt;p&gt;Merk: For utbetalinger som gjelder dagpenger eller arbeidsavklaringspenger, så vil ikke feltet være utfylt.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="posteringsdato" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Datoen utbetalingen ble postert i NAVs registre og sendt til bank.&lt;/p&gt;&lt;p&gt;Merk: For utbetalinger som gjelder dagpenger eller arbeidsavklaringspenger, så vil ikke feltet være utfylt.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utbetalingGjelder" type="utbetaling:Bruker">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Brukeren utbetalingen gjelder, altså den som har rettigheten til denne ytelsen. Se definisjon av klassen Bruker.&lt;/p&gt;&lt;p&gt;Merk at dersom brukeren som utbetalingen gjelder har en verge, eller på en annen måte har fått fastsatt en annen person/organisasjon til å forvalte vedkommendes penger, så vil utbetalingen bli utbetalt til denne vergen. Hvem utbetalt beløp faktisk er overført til fremkommer ikke i informasjonen som utleveres fra NAV i denne tjenesten.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="ytelseListe" type="utbetaling:Ytelse">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Liste over ytelser som inngår i denne utbetalingen. Se definisjon av klassen Ytelse.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="trekkListe" type="utbetaling:Trekk">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Liste over trekk som inngår i denne utbetalingen. Se definisjon av klassen Trekk.&lt;/p&gt;&lt;p&gt;Merk: For utbetalinger som gjelder dagpenger eller arbeidsavklaringspenger, så vil ikke feltet være utfylt.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="utbetaling:UtbetalingUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

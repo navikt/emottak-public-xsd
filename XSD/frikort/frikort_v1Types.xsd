@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://nav.no/tjeneste/ekstern/frikort/v1/types"
+        targetNamespace="http://nav.no/tjeneste/ekstern/frikort/v1/types"
+        xmlns:fellesformat="http://www.trygdeetaten.no/xml/eiff/1/"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.trygdeetaten.no/xml/eiff/1/" schemaLocation="../Fellesformat_1.0.xsd"/>
+
+    <xsd:element name="pingRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="pingResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="frikortsporringRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="fellesformat:EI_fellesformat" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="frikortsporringResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="fellesformat:EI_fellesformat" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="frikortsporringMengdeRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="fellesformat:EI_fellesformat" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="frikortsporringMengdeResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="fellesformat:EI_fellesformat" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
