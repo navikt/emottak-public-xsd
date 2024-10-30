@@ -1,2 +1,2 @@
-# E-mottak public XSD
+# eMottak public XSD
 Open XSDs from Nav
