@@ -1,0 +1,38 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:feil="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/feil/v1"
+            xmlns:meldinger="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/meldinger/v1"
+            xmlns:ns1="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/v1"
+            targetNamespace="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/v1">
+    <xsd:import namespace="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/feil/v1"
+                schemaLocation="feil.xsd"/>
+    <xsd:import namespace="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/meldinger/v1"
+                schemaLocation="meldinger.xsd"/>
+    <xsd:element name="finnUtbetalingListe">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="request" type="meldinger:FinnUtbetalingListeRequest"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="finnUtbetalingListeResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="meldinger:FinnUtbetalingListeResponse" minOccurs="0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="finnUtbetalingListeFeil">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element name="finnUtbetalingListebrukerIkkeFunnet" type="feil:BrukerIkkeFunnet"/>
+                <xsd:element name="finnUtbetalingListeingenTilgangTilEnEllerFlereYtelser"
+                             type="feil:IngenTilgangTilEnEllerFlereYtelser"/>
+                <xsd:element name="finnUtbetalingListeugyldigDato" type="feil:UgyldigDato"/>
+                <xsd:element name="finnUtbetalingListeugyldigKombinasjonBrukerIdOgBrukertype"
+                             type="feil:UgyldigKombinasjonBrukerIdOgBrukertype"/>
+                <xsd:element name="finnUtbetalingListebaksystemIkkeTilgjengelig"
+                             type="feil:BaksystemIkkeTilgjengelig"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
