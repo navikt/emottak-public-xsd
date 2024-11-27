@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Supertype for tilleggsinfo til alle andre supertyper -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://www.sismo.no/tilleggsinfo"
+		xmlns:tilleggsinfo="http://www.sismo.no/tilleggsinfo"
+		elementFormDefault="qualified"
+		version="1.0.0">
+
+		<xsd:element name="Tilleggsinfoliste">
+			<xsd:complexType mixed="true">
+				<xsd:sequence>
+					<xsd:element name="tilleggsinfo" minOccurs="1" maxOccurs="unbounded">
+						<xsd:complexType mixed="true">
+							<xsd:attribute ref="tilleggsinfo:betydning" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>	
+		</xsd:element>
+		<xsd:attribute name="betydning" type="xsd:string" />
+</xsd:schema>

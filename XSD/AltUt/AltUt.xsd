@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Accenture (Accenture) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="GovOrgan">
+		<xs:annotation>
+			<xs:documentation>This is the outer element of the AltUt format. A GovOrgan is the representation of the Government agency that has sent the batch.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AltUt">
+					<xs:annotation>
+						<xs:documentation>This is the outer element encapsuling the AltUt messages. This element will containt 1 or more Message elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Message" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>This is the actual Message. One message will in the Altinn portal become one AltUt message which the participant can view.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RoleReqRead" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>If the Altinn user will need to have a certain role/right for the participant in order to read the message, this element should contain the Altinn specific right or the role as defined from Enhetsregisteret.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="RoleReqDeleteConfirm" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>If the Altinn user will need to have a certain role/right for the participant in order to read the message, this element should contain the Altinn specific right or the role as defined from Enhetsregisteret.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="RoleReqGovAgency" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>This is the role that users of the Altinn enterprise portal will need to have in order to read information about the message. If this element is blank, the message will not be viewable in the enterprise portal.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Sender">
+											<xs:annotation>
+												<xs:documentation>This is information about the agency that has sent the message.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Name">
+														<xs:annotation>
+															<xs:documentation>This is the name of the agency that has sent the message.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="50"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Participant">
+											<xs:annotation>
+												<xs:documentation>This is the participant to whom the message is sent.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="VisibleDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>If the message is to be visible after a certain date and time, it should be specified here. If this element is left blank, the message will be viewable instantly after the message is read into Altinn.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="DueDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>If the message has a date and time before which it should be read, it should be specified here. If this date is reached, the message will be marked as overdue in the Altinn portal.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AltinnArchive" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>If this message refers to an element in the Altinn archive (i.e. a submitted form), specify the archive ID here.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:pattern value="[A][M]\d+"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="LoginSecurityLevel" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>If the user must log in to Altinn with a given security level in order to view the message, it should be specified here. The values are 1 for password, 2 for pin codes, 3 is currently not used and 4 for Buypass.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:byte">
+																<xs:minInclusive value="1"/>
+																<xs:maxInclusive value="4"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="AllowUserDeleteDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The date after which the user should be able to delete the message. If left blank, the user can delete the message at any time.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AllowSystemDeleteDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The date after which the Altinn system can delete the message. If left blank, the message will be deleted only after the sending agency has been consulted.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="VisibleInClientReport" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Whether the message should be visible in the client status report (used by book keepers and accountants).</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="RequireConfirmation" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Specify whether the user should confirm that he/she has read the message or not.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Year" type="xs:gYear" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The year this message should be associated with in Altinn</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="MunicipalNumber" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The municipal this message should be associated with in Altinn</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:pattern value="\d\d\d\d"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Content">
+														<xs:annotation>
+															<xs:documentation>This is the actual content of the message which will be displayed to the user.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="MessageHeader">
+																	<xs:annotation>
+																		<xs:documentation>This is the message header that will be visible on the users "Mottatt"-list in the Altinn portal.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="128"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="MessageSubject" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>This is the message subject</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="128"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="MessageSummery" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>This is a short summary of the message.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="512"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="Invoice" minOccurs="0" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation>This Altut message contains invoice information</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="InvoiceInfo" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>This invoice contains html or e2b</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="InvoiceDescription" minOccurs="0" maxOccurs="1">
+																							<xs:annotation>
+																								<xs:documentation>This Altut message contains html invoice</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="YearDescription" minOccurs="0">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="PeriodDescription" minOccurs="0">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="DueDateDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="KidDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="SupplierDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="BuyerDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="GrossAmountDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="AccountNumberDescription">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="40"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																								</xs:sequence>
+																								<xs:attribute name="GenerateOnlyHtml">
+																									<xs:annotation>
+																										<xs:documentation>Decide if only html should be generated for the Invoice.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:boolean"/>
+																									</xs:simpleType>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																						<xs:element name="InvoiceData" minOccurs="0" maxOccurs="1">
+																							<xs:annotation>
+																								<xs:documentation>This data for the invoice</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="PeriodData" minOccurs="0">
+																										<xs:annotation>
+																											<xs:documentation>Period information for the invoice.</xs:documentation>
+																										</xs:annotation>
+																										<xs:complexType>
+																											<xs:sequence>
+																												<xs:element name="PeriodYear">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:int">
+																															<xs:minInclusive value="1789"/>
+																															<xs:maxInclusive value="9999"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="PeriodNumber">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:int">
+																															<xs:minInclusive value="1"/>
+																															<xs:maxInclusive value="366"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="PeriodType">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:int">
+																															<xs:minInclusive value="-1"/>
+																															<xs:maxInclusive value="10"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																											</xs:sequence>
+																										</xs:complexType>
+																									</xs:element>
+																									<xs:element name="MunicipalData" minOccurs="0">
+																										<xs:annotation>
+																											<xs:documentation>Municipal information for the invoice.</xs:documentation>
+																										</xs:annotation>
+																										<xs:complexType>
+																											<xs:sequence>
+																												<xs:element name="InvoiceMunicipalNumber" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:pattern value="\d\d\d\d"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="MunicipalName" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string"/>
+																													</xs:simpleType>
+																												</xs:element>
+																											</xs:sequence>
+																										</xs:complexType>
+																									</xs:element>
+																									<xs:element name="InvoiceDueDate">
+																										<xs:simpleType>
+																											<xs:restriction base="xs:date"/>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="KidNumber">
+																										<xs:annotation>
+																											<xs:documentation>KidNumber of the invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="25"/>
+																												<xs:pattern value="\d+"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="SupplierData">
+																										<xs:annotation>
+																											<xs:documentation>Supplier information for the invoice.</xs:documentation>
+																										</xs:annotation>
+																										<xs:complexType>
+																											<xs:sequence>
+																												<xs:element name="SupplierName">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="SupplierAddress" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="SupplierPostalCode" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:pattern value="\d\d\d\d"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="SupplierPostalName" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																											</xs:sequence>
+																										</xs:complexType>
+																									</xs:element>
+																									<xs:element name="BuyerData">
+																										<xs:annotation>
+																											<xs:documentation>Supplier information for the invoice.</xs:documentation>
+																										</xs:annotation>
+																										<xs:complexType>
+																											<xs:sequence>
+																												<xs:element name="BuyerName">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="BuyerAddress" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="BuyerPostalCode" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:pattern value="\d\d\d\d"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																												<xs:element name="BuyerPostalName" minOccurs="0">
+																													<xs:simpleType>
+																														<xs:restriction base="xs:string">
+																															<xs:maxLength value="100"/>
+																														</xs:restriction>
+																													</xs:simpleType>
+																												</xs:element>
+																											</xs:sequence>
+																										</xs:complexType>
+																									</xs:element>
+																									<xs:element name="GrossAmount">
+																										<xs:annotation>
+																											<xs:documentation>GrossAmount of the invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:int"/>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="AccountNumber">
+																										<xs:annotation>
+																											<xs:documentation>Account number of the invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="16"/>
+																												<xs:pattern value="\d+"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="ShowAmountBelowZero" minOccurs="0">
+																										<xs:annotation>
+																											<xs:documentation>Bool to deside if amount below 0 should be hidden in the html of the invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:boolean"/>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="E2BDescription">
+																										<xs:annotation>
+																											<xs:documentation>Description of the e2b invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:string">
+																												<xs:maxLength value="100"/>
+																											</xs:restriction>
+																										</xs:simpleType>
+																									</xs:element>
+																									<xs:element name="UsePeriodFormating" minOccurs="0">
+																										<xs:annotation>
+																											<xs:documentation>Bool to deside if period formating should be used in html invoice</xs:documentation>
+																										</xs:annotation>
+																										<xs:simpleType>
+																											<xs:restriction base="xs:boolean"/>
+																										</xs:simpleType>
+																									</xs:element>
+																								</xs:sequence>
+																								<xs:attribute name="E2bInvoiceFilename" use="required">
+																									<xs:annotation>
+																										<xs:documentation>Decide if only html should be generated for the Invoice.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="50"/>
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:choice minOccurs="0">
+																	<xs:element name="Attachments">
+																		<xs:annotation>
+																			<xs:documentation>This element will contain all and any attachments to the message. These can be any file type.</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="Attachment" maxOccurs="unbounded">
+																					<xs:annotation>
+																						<xs:documentation>This element will contain information about 1 attachment. The content of this element must be the BASE64 encoded version of the attachment.</xs:documentation>
+																					</xs:annotation>
+																					<xs:complexType>
+																						<xs:simpleContent>
+																							<xs:extension base="xs:string">
+																								<xs:attribute name="id" type="xs:string">
+																									<xs:annotation>
+																										<xs:documentation>This is a unique ID for the attachment within the current message. If a message has several attachments, the attachments must not have the same ID.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="functionType">
+																									<xs:annotation>
+																										<xs:documentation>This defines the function of this attachment</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:pattern value="Unspecified"/>
+																											<xs:pattern value="Invoice"/>
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																								<xs:attribute name="type" type="xs:string" use="required">
+																									<xs:annotation>
+																										<xs:documentation>The type of attachment using MIME-specification, such as application/pdf, text/plain etc.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="filename" use="required">
+																									<xs:annotation>
+																										<xs:documentation>This is the name of the file that the user will see when viewing the message and the name the web browser will save the file as.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="50"/>
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																								<xs:attribute name="name">
+																									<xs:annotation>
+																										<xs:documentation>The name of the attachment.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="50"/>
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																							</xs:extension>
+																						</xs:simpleContent>
+																					</xs:complexType>
+																				</xs:element>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="HTML" type="xs:string">
+																		<xs:annotation>
+																			<xs:documentation>If the message is to be presented using HTML-formatted text, place the text here.</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>																	
+																</xs:choice>
+															</xs:sequence>
+															<xs:attribute name="languageCode">
+																<xs:annotation>
+																	<xs:documentation>This is the language that the message is written in.</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="1033"/>
+																		<xs:pattern value="1044"/>
+																		<xs:pattern value="1083"/>
+																		<xs:pattern value="2068"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="id" use="required">
+													<xs:annotation>
+														<xs:documentation>The ID of the participant. It must be either a 9 digit organization number or an 11 digit social security number.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="\d\d\d\d\d\d\d\d"/>
+															<xs:pattern value="\d\d\d\d\d\d\d\d\d"/>
+															<xs:pattern value="\d\d\d\d\d\d\d\d\d\d\d"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="NotificationMessages" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>This will contain the notification messages sent to the user when the AltUt message is read into Altinn.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="NotificationMessage" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>A notification message sent to the user when the AltUt message is read into Altinn.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="SMSPhoneNumbers" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>This element contains the phone numbers to send an SMS to.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="SMSPhoneNumber" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation>An SMS number to send the notification message to.</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:maxLength value="200"/>
+																						<xs:pattern value="\+\d+"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="EmailAddresses" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>E-mail addresses that the notification message will be sent to.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="EmailAddress" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation>An E-mail address that will receive a notification message when the AltUt message is read into Altinn.</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:maxLength value="200"/>
+																						<xs:pattern value="([0-9a-zA-Z][\.\-\w]*[0-9a-zA-Z]@[0-9a-zA-Z][\.\-\w]*[0-9a-zA-Z]\.[a-zA-Z]{2,9})$"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="participantId" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>The 11 digit social security number of the participant receiving the notification.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="NotificationTypeName" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation/>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ReplyMessages" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation/>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ReplyMessage">
+														<xs:annotation>
+															<xs:documentation/>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:choice>
+																	<xs:element name="Form">
+																		<xs:annotation>
+																			<xs:documentation/>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:attribute name="formNumber" type="xs:long" use="required">
+																				<xs:annotation>
+																					<xs:documentation/>
+																				</xs:annotation>
+																			</xs:attribute>
+																			<xs:attribute name="version" type="xs:long">
+																				<xs:annotation>
+																					<xs:documentation/>
+																				</xs:annotation>
+																			</xs:attribute>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="ServiceCode">
+																		<xs:annotation>
+																			<xs:documentation/>
+																		</xs:annotation>
+																		<xs:simpleType>
+																			<xs:restriction base="xs:string">
+																				<xs:maxLength value="100"/>
+																			</xs:restriction>
+																		</xs:simpleType>
+																	</xs:element>
+																	<xs:element name="ServiceURL">
+																		<xs:annotation>
+																			<xs:documentation/>
+																		</xs:annotation>
+																		<xs:simpleType>
+																			<xs:restriction base="xs:string">
+																				<xs:maxLength value="100"/>
+																			</xs:restriction>
+																		</xs:simpleType>
+																	</xs:element>
+																	<xs:element name="ArchiveReference">
+																		<xs:annotation>
+																			<xs:documentation/>
+																		</xs:annotation>
+																		<xs:simpleType>
+																			<xs:restriction base="xs:string">
+																				<xs:maxLength value="100"/>
+																				<xs:pattern value="[A][M]\d+"/>
+																			</xs:restriction>
+																		</xs:simpleType>
+																	</xs:element>
+																</xs:choice>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="shortName" use="required">
+										<xs:annotation>
+											<xs:documentation/>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:maxLength value="50"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="messageReference">
+										<xs:annotation>
+											<xs:documentation/>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:maxLength value="40"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="viewFormat" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The type of view format to use.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="allowDelete" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>If the user should be allowed to delete the message or not.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="persistent" type="xs:boolean" use="required">
+										<xs:annotation>
+											<xs:documentation>If the message is to be stored persistently or allowed for deletion after a certain time.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="sequenceno" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>This is the sequence number for this AltUt batch. It needs to be 1 greater than the last batch from the same GovAgency. If it is not 1 greater, the batch will be refused by Altinn.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>This is the short name of the government agency that has sent the batch. This name must be registered in Altinn and must be the same as the short name used on the AltUt order form.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

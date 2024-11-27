@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.sismo.no/utleggsbasen/utlegg/status"
+			elementFormDefault="qualified" 
+			attributeFormDefault="unqualified" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns="http://www.sismo.no/utleggsbasen/utlegg/status" 
+			xmlns:pref="http://www.sismo.no/utleggsbasen/response"
+			xmlns:ds="http://www.w3.org/2000/09/xmldsig#">			
+
+<xsd:import schemaLocation="xmldsig-core-schema.xsd"  namespace="http://www.w3.org/2000/09/xmldsig#" />
+    
+    <xsd:annotation>
+		<xsd:documentation>ver 0.5</xsd:documentation>
+	</xsd:annotation>
+
+    <xsd:element name="response">
+    	<xsd:complexType>
+            <xsd:sequence minOccurs="0" maxOccurs="1">
+            	<!--<xsd:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>-->
+                <xsd:element name="meldingsid" type="Messageid" maxOccurs="1" minOccurs="0" />
+                <xsd:element name="status" type="statusResponseType" maxOccurs="1" minOccurs="0"/>
+            	<xsd:element name="batchjobb" type="batchJobbResponseType" maxOccurs="1" minOccurs="0"/>
+            	<xsd:element name="utleggresponse" type="utleggResponseType" maxOccurs="1" minOccurs="0"/>
+            	 <xsd:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/> 
+            </xsd:sequence>
+    	</xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name="batchjobb">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="dato" type="xsd:dateTime" maxOccurs="1" minOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="messageid" type="Messageid" use="required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name="status">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="kildeid" type="kildeIdTekst" minOccurs="1" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="messageid" type="Messageid" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:simpleType name="ISO-dato">
+		<xsd:restriction base="xsd:date"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="dato">
+		<xsd:restriction base="xsd:dateTime"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OrgnrStreng">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="9"></xsd:length>
+			<xsd:pattern value="[0-9]{9}"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="organisasjonsnummer">
+		<xsd:restriction base="OrgnrStreng"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst4tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="4"></xsd:length>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst2tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="2"></xsd:length>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="VerdiDesimal">
+		<xsd:restriction base="xsd:decimal">
+
+			<xsd:minInclusive value="0"></xsd:minInclusive>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst50tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"></xsd:maxLength>
+			<xsd:minLength value="0"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="navn">
+		<xsd:restriction base="Tekst50tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="beskrivelse">
+		<xsd:restriction base="Tekst50tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst15tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tekst">
+		<xsd:restriction base="Tekst15tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst2000tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tekstBig">
+		<xsd:restriction base="Tekst2000tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tekstMed">
+		<xsd:restriction base="Tekst50tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Tekst16tegn">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"></xsd:minLength>
+			<xsd:maxLength value="16"></xsd:maxLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="kildeIdTekst">
+		<xsd:restriction base="Tekst50tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="priokode">
+		<xsd:restriction base="Tekst50tegn">
+			<xsd:enumeration value="§2-8 a, Bidrag"></xsd:enumeration>
+			<xsd:enumeration value="§2-8 b, Erstatning"></xsd:enumeration>
+			<xsd:enumeration value="§2-8 c, Bøter"></xsd:enumeration>
+			<xsd:enumeration
+				value="§2-8 d, Skatt eller offentlig avgift">
+			</xsd:enumeration>
+			<xsd:enumeration value="§2-8 e, Andre krav"></xsd:enumeration>
+			<xsd:enumeration value="Rettsgebyr"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="checksum">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="40"></xsd:length>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Utleggstype">
+		<xsd:restriction base="xsd:string">
+
+			<xsd:length value="3"></xsd:length>
+			<xsd:enumeration value="UTT"></xsd:enumeration>
+			<xsd:enumeration value="ITU"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Messageid">
+		<xsd:restriction base="Tekst50tegn"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="Utleggstatus">
+		<xsd:sequence minOccurs="0" maxOccurs="1">
+			<xsd:element name="kildeid" type="kildeIdTekst"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element name="dato" type="dato" minOccurs="0"></xsd:element>
+			<xsd:element name="statuskode" type="statuskodeType"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element name="statustekst" type="tekstBig"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element name="reftomeldingsid" type="Messageid" minOccurs="0" maxOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="statuskodeType">
+		<xsd:restriction base="xsd:string">
+
+			<xsd:minLength value="0"></xsd:minLength>
+			<xsd:maxLength value="3"></xsd:maxLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+    <xsd:complexType name="responseType">
+    	<xsd:sequence>
+    		<xsd:element name="status" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="statusResponseType">
+        <xsd:sequence maxOccurs="1" minOccurs="0">
+            <xsd:element name="status" type="UtleggsInfo" maxOccurs="unbounded" minOccurs="0">
+        	</xsd:element>
+
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="batchJobbResponseType">
+    	<xsd:sequence maxOccurs="1" minOccurs="0">
+    		<xsd:element name="stamp" type="xsd:dateTime"></xsd:element>
+    		<xsd:element name="status" type="statuskodeType"></xsd:element>
+    		<xsd:element name="statustekst" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="utleggResponseType">
+    	<xsd:sequence maxOccurs="1" minOccurs="0">
+    		<xsd:element name="dato" type="xsd:dateTime"></xsd:element>
+    		<xsd:element name="statuskode" type="statuskodeType">
+    		</xsd:element>
+    		<xsd:element name="statustekst" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="KildeObjektIdType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Dagbok">
+    	<xsd:sequence>
+    		<xsd:element name="dagboknr" maxOccurs="1" minOccurs="1">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:integer">
+    					<xsd:minInclusive value="0"></xsd:minInclusive>
+    					<xsd:maxInclusive value="9999999999"></xsd:maxInclusive>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    		<xsd:element name="embnr" type="xsd:short" maxOccurs="1" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Hoveddagbok">
+    	<xsd:complexContent>
+    		<xsd:extension base="Dagbok"></xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="TinglystInfo">
+    	<xsd:sequence minOccurs="0" maxOccurs="1">
+    		<xsd:element name="kildeid" type="kildeIdTekst"
+    			maxOccurs="1" minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="dato" type="dato" minOccurs="0" maxOccurs="1"></xsd:element>
+    		<xsd:element name="kildeObjekter" type="Objekter"
+    			maxOccurs="1" minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="dagbok" type="Dagbok" maxOccurs="1"
+    			minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="dagbokdato" type="xsd:string"
+    			maxOccurs="1" minOccurs="0">
+    		</xsd:element>
+    		<xsd:element name="meldStatusTekst" maxOccurs="1"
+    			minOccurs="0">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:maxLength value="100"></xsd:maxLength>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    		<xsd:element name="oversendelsesBrev" maxOccurs="unbounded"
+    			minOccurs="0">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:maxLength value="100"></xsd:maxLength>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    		<xsd:element name="panteattest" maxOccurs="unbounded"
+    			minOccurs="1">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:maxLength value="100"></xsd:maxLength>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+
+    		<xsd:element name="reftomeldingsid" type="Messageid"
+    			minOccurs="0" maxOccurs="1">
+    		</xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UtleggsInfo">
+        <xsd:choice minOccurs="0" maxOccurs="1">
+        	<xsd:element name="utleggsStatus" type="Utleggstatus" maxOccurs="1" minOccurs="0"></xsd:element>
+        	<xsd:element name="tinglystInfo" type="TinglystInfo" maxOccurs="1" minOccurs="0"></xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="Objekter">
+    	<xsd:sequence maxOccurs="1" minOccurs="0">
+    		<xsd:element name="kildeObjektId" maxOccurs="unbounded" minOccurs="1">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:minLength value="1"></xsd:minLength>
+    					<xsd:maxLength value="25"></xsd:maxLength>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+</xsd:schema>

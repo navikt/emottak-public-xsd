@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://www.sismo.no/transaksjon"
+		xmlns:transaksjon="http://www.sismo.no/transaksjon"
+		elementFormDefault="qualified"
+		version="1.0.0">
+
+    <xsd:element name="Transaksjon">
+      <xsd:complexType>
+        <xsd:sequence>
+			<xsd:element ref="transaksjon:transId" minOccurs="0" maxOccurs="1">
+    	   		<xsd:annotation>
+       				<xsd:documentation>
+       				Teller kun innenfor gitte typer kravoversendele.
+       				Fylles ut etter avtale!!
+       				</xsd:documentation>
+       			</xsd:annotation></xsd:element>
+			<xsd:element ref="transaksjon:transRef" minOccurs="0" maxOccurs="1" />
+			<xsd:element ref="transaksjon:typeTransaksjon" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="transaksjon:belop" minOccurs="1" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:transDato" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:valuta" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:fraDato" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:tilDato" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:rentesats" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:rentetype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="transaksjon:dekningsprioritet" maxOccurs="1" minOccurs="0"/>
+            <xsd:element ref="transaksjon:beskrivelse" maxOccurs="1" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name="transId" type="transaksjon:transIdType"/>
+	<xsd:element name="typeTransaksjon" type="transaksjon:typeTransaksjonType"/>
+	<xsd:element name="transRef" type="transaksjon:transIdType"/>
+	<xsd:element name="belop" type="transaksjon:belopType"/>
+	<xsd:element name="valuta" type="transaksjon:valutaType"/>
+	<xsd:element name="transDato" type="xsd:date"/>
+	<xsd:element name="fraDato" type="xsd:date"/>
+	<xsd:element name="tilDato" type="xsd:date"/>
+	<xsd:element name="rentesats" type="transaksjon:rentesatsType"/>
+	<xsd:element name="rentetype" type="transaksjon:rentetypeType"/>
+	<xsd:element name="dekningsprioritet" type="xsd:int"/>
+	<xsd:element name="beskrivelse" type="transaksjon:beskrivelseType"/>
+			
+		<xsd:simpleType name="transIdType">
+			<xsd:restriction base="xsd:int"/>				
+		</xsd:simpleType>		
+		
+		<xsd:simpleType name="typeTransaksjonType">
+			<xsd:restriction base="xsd:string">
+				<xsd:minLength value="1"></xsd:minLength>
+				<xsd:maxLength value="3"></xsd:maxLength>
+			</xsd:restriction>
+		</xsd:simpleType>
+
+
+		<xsd:simpleType name="belopType">
+			<xsd:restriction base="xsd:decimal">
+			</xsd:restriction>
+		</xsd:simpleType>
+
+		<xsd:simpleType name="valutaType">
+		  <xsd:restriction base="xsd:string">
+		    <xsd:length value="3"/>
+		  </xsd:restriction>
+		</xsd:simpleType>
+		
+		
+		<xsd:simpleType name="rentesatsType">
+			<xsd:restriction base="xsd:decimal">
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="rentetypeType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="Fast"/>
+				<xsd:enumeration value="Forsinkelse"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+       	<xsd:simpleType name="beskrivelseType">
+       		<xsd:restriction base="xsd:string">
+       			<xsd:maxLength value="20"></xsd:maxLength>
+       		</xsd:restriction>
+       	</xsd:simpleType>
+
+</xsd:schema>

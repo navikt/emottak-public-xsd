@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema targetNamespace="http://www.kith.no/xmlstds/rtv/appsvar/1/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:asv="http://www.kith.no/xmlstds/rtv/appsvar/1/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xs:complexType name="typeSystemSvar">
+		<xs:annotation>
+			<xs:documentation>Dette elementet inneholder ett svar/utfall fra kontrollsystemet.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="meldingsNr" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>Et tall som identifisererer dette utfallet av kontrollsystem.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsTekst" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Tekst som beskriver utfallet av kontrollsystemet.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsPrioritet" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er et ordningstall som sorterer svarene etter viktighet. Lavt tall er først/viktigst.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsHjelpURL" type="xs:anyURI" use="optional">
+			<xs:annotation>
+				<xs:documentation>Relevant i de tilfeller hvor meldingstype angir at det er en feil og hvor applikasjonssvaret skal sendes til bake til avsender. 
+
+Dette skal være en URL som peker på en webside hvor en avsender kan få mer informasjon om feilkoden og hva som må gjøres for å korrigere feilsituasjonen.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsType" type="asv:typeSystemMeldingsType" use="required">
+			<xs:annotation>
+				<xs:documentation>Verdien angir om dette utfallet er en avvisningsgrunn, en opplysning til ved arkiver eller om det krever oppfølging.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="typeSystemSvarBlokk">
+		<xs:annotation>
+			<xs:documentation>Denne blokken inneholder ett sett svar/utfall fra kontrollsystemet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemSvar" type="asv:typeSystemSvar" maxOccurs="unbounded"/>
+			
+			
+			<xs:element name="Signature" type="ds:SignatureType" maxOccurs="unbounded"/>
+
+			
+			
+			
+		</xs:sequence>
+		<xs:attribute name="tidsstempel" type="xs:dateTime" use="required">
+			<xs:annotation>
+				<xs:documentation>Tidsstempel som viser når disse svarende ble generert.
+</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="typeFormOfLanguage">
+		<xs:annotation>
+			<xs:documentation>Kodeverdier 1-2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Bokmål</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Nynorsk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeSystemMeldingsType">
+		<xs:annotation>
+			<xs:documentation>Feil eller opplysning</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:appinfo source="Feil"/>
+					<xs:documentation>Dette indikerer at det er en sak som har feil in inputdata. Denne informasjonen kan sendes tilbake til avsender.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:appinfo>Opplysning
+</xs:appinfo>
+					<xs:documentation>Dette indikerer at dette er en opplysning. Denne informasjonen er internt.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:appinfo>Oppfølging</xs:appinfo>
+					<xs:documentation>Dette indikerer at det er en sak som bør følges opp. Denne informasjonen er intern.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="typeApplikasjonsSvarBlokk">
+		<xs:annotation>
+			<xs:documentation>Denne blokken representerer type på en en kvittering slik den er synlig utad</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="asv:typeSystemSvarBlokk">
+				<xs:attribute name="formOfLanguage" type="asv:typeFormOfLanguage" use="required">
+					<xs:annotation>
+						<xs:documentation>Dette attributte skal vel i teorien matche det inngående SM/LE formOfLanguage. Nå finnes ikke utfallene  fra kontrollsystemet på flere målføre, så det har p.t. ikke stor mening.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="sendersId" use="optional">
+					<xs:annotation>
+						<xs:documentation>Denne stringen skal være en tekst streng nøkkel som kontrollsystemet genererer for å kunne matche et mulig svar på eller referanse til kvitteringen som ble sendt. Nøkkelen skal ikke inneholde fødselsnummer eller informasjon som kan brukes til å spore pasienten om noen får tak i nøkkelen.
+
+Husk at ved overføring kvitteringen blir sender og receiver byttet om i forhold til den innsendte SM/LE. </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="receiversId" use="optional">
+					<xs:annotation>
+						<xs:documentation>Denne stringen skal være den eksakt samme (string, whitespace preserved) som den innkommende SM/LEs sendersID. Husk at ved overføring kvitteringen blir sender og receiver byttet om i forhold til den innsendte SM/LE.
+
+Hvis innkommende SM/LE sendersID ikke er satt, så skal dette attributtet heller ikke settes. </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="messageId" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ApplikasjonsSvarBlokk" type="asv:typeApplikasjonsSvarBlokk">
+		<xs:annotation>
+			<xs:documentation>Denne blokken representerer en kvittering slik den er synlig utad</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

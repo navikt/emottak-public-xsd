@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.nav.no/sbl/sbl_oppfolgingsplan_v1.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nav.no/sbl/sbl_oppfolgingsplan_v1.xsd"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="OppfolgingsplanMetadata">
+        <xs:annotation>
+            <xs:documentation>Metadata for oppfølgingsplan fra arbeidsgiver til NAV</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="bedriftsNr" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Bedriftsnummer for rapporterende bedrift</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="fodselsNr" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Fødselsnummer på sykmeldt arbeidstaker</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="BistandNav" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>Trenger arbeidsgiver bistand fra NAV? (J/N)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

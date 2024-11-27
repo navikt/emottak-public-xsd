@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<!-- Fysioterapeutppgjørsmelding (FOM) v 1.1 2006-07-05 rev0-->
+<schema targetNamespace="http://www.kith.no/xmlstds/fom/2006-07-05" xmlns:fom="http://www.kith.no/xmlstds/fom/2006-07-05" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- LEVEL 1 -->
+	<!-- Class: Krav -->
+	<element name="Fysioterapeutregning">
+		<complexType>
+			<sequence>
+				<element name="KID" minOccurs="0">
+					<simpleType>
+						<restriction base="string"/>
+					</simpleType>
+				</element>
+				<element ref="fom:Enkeltregning" maxOccurs="unbounded"/>
+				<element ref="fom:Krav"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="Krav">
+		<annotation>
+			<documentation>
+         Informasjon om krav.
+      </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="AntallRegninger" type="int"/>
+				<element name="SumKravSamlet" type="fom:MO"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- LEVEL 2 -->
+	<!-- Class: Enkeltregning -->
+	<element name="Enkeltregning">
+		<annotation>
+			<documentation>
+         Enkeltregning for en behandling. En fysioterapiregning kan inneholde mange enkeltregninger. 
+      </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="RegningNr" type="string"/>
+				<element name="DatoTid" type="dateTime"/>
+				<element name="Merknad" type="string" minOccurs="0"/>
+				<element ref="fom:Patient"/>
+				<element ref="fom:Behandling"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- LEVEL 3 -->
+	<!-- Class: Pasient -->
+	<element name="Patient">
+		<annotation>
+			<documentation>
+         Informasjon som er knyttet til rollen som pasient.
+      </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="FamilyName" type="string" minOccurs="0"/>
+				<element name="MiddleName" type="string" minOccurs="0"/>
+				<element name="GivenName" type="string" minOccurs="0"/>
+				<element name="DateOfBirth" type="date" minOccurs="0"/>
+				<element name="Sex" type="fom:CS" minOccurs="0"/>
+				<element name="Nationality" type="fom:CS" minOccurs="0"/>
+				<element name="Ident" type="fom:Ident"/>
+				<element name="ArbeidstagerNorge" type="fom:CS" minOccurs="0"/>
+				<element ref="fom:EEA" minOccurs="0"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- Class: Behandling -->
+	<element name="Behandling">
+		<annotation>
+			<documentation>
+         Informasjon om den enkelte behandling som ligger til grunn for enkeltregningen.
+      </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="KodeEgenandel" type="fom:CS" minOccurs="0"/>
+				<element name="Diagnose" type="fom:CV" maxOccurs="unbounded"/>
+				<element name="TilsagnTK" type="fom:CS" minOccurs="0"/>
+				<element name="Sykdomslistepunkt" type="string" minOccurs="0"/>
+				<element name="HenvisningsDato" type="date" minOccurs="0"/>
+				<element name="HenvisningsId" type="string" minOccurs="0"/>
+				<element name="OperasjonsDato" type="date" minOccurs="0"/>
+				<element name="BehandlingsNr" type="int"/>
+				<element ref="fom:Takst" maxOccurs="unbounded"/>
+				<element name="SumKrav">
+					<complexType>
+						<complexContent>
+							<extension base="fom:MO">
+								<sequence>
+									<element name="EgenandelHonorar" type="fom:MO" minOccurs="0"/>
+									<element name="Refusjon" type="fom:MO"/>
+								</sequence>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- LEVEL 4 -->
+	<!-- Class: EØS -->
+	<element name="EEA">
+		<complexType>
+			<sequence>
+				<element name="EOSDok" type="fom:CS"/>
+				<element name="EEACardId" type="string"/>
+				<element name="EEAId" type="string"/>
+				<element name="EEAtrygdekontorNavn" type="string"/>
+				<element name="EEAtrygdekontorNr" type="string"/>
+				<element name="EEAgyldighet" type="date"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- Class: Takst -->
+	<element name="Takst">
+		<annotation>
+			<documentation>
+         Informasjon om takster som er brukt.
+      </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="Verdi" type="fom:MO" minOccurs="0"/>
+				<element name="Kode" type="string"/>
+				<element name="Antall" type="int"/>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="Ident">
+		<sequence>
+			<element name="Id" type="string"/>
+			<element name="TypeId" type="fom:CV"/>
+		</sequence>
+	</complexType>
+	<!-- KITH/HL7 datatyper -->
+	<complexType name="CS">
+		<attribute name="V" type="token" use="optional"/>
+		<attribute name="DN" type="string" use="optional"/>
+	</complexType>
+	<complexType name="CV">
+		<attribute name="V" type="token" use="optional"/>
+		<attribute name="S" type="fom:oid" use="optional"/>
+		<attribute name="DN" type="string" use="optional"/>
+		<attribute name="OT" type="string" use="optional"/>
+	</complexType>
+	<complexType name="MO">
+		<attribute name="V" type="double" use="optional"/>
+		<attribute name="U" type="token" use="optional"/>
+	</complexType>
+	<simpleType name="oid">
+		<restriction base="token">
+			<pattern value="(\d+\.?)*\d+"/>
+		</restriction>
+	</simpleType>
+</schema>

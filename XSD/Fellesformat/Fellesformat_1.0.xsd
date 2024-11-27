@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
 <schema targetNamespace="http://www.trygdeetaten.no/xml/eiff/1/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ff="http://www.trygdeetaten.no/xml/eiff/1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns:aln="http://www.nav.no/altinn/2007-02-02" xmlns:mh="http://www.kith.no/xmlstds/msghead/2006-05-24" xmlns:rtv="http://www.kith.no/xmlstds/sykmelding/2004-05-03" xmlns:pom="http://www.rtv.no/NamespacePOM" xmlns:lom="http://www.kith.no/xmlstds/lom/2003-12-01" xmlns:app="http://www.kith.no/xmlstds/apprec/2004-11-21" xmlns:asv="http://www.kith.no/xmlstds/rtv/appsvar/1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<import namespace="http://www.kith.no/xmlstds/apprec/2004-11-21" schemaLocation="./AppRec-v1-2004-11-21.xsd"/>
-	<import namespace="http://www.kith.no/xmlstds/msghead/2006-05-24" schemaLocation="./MsgHead-v1_2.xsd"/>
+	<import namespace="http://www.kith.no/xmlstds/apprec/2004-11-21" schemaLocation="AppRec-v1-2004-11-21.xsd"/>
+	<import namespace="http://www.kith.no/xmlstds/msghead/2006-05-24" schemaLocation="MsgHead-v1_2.xsd"/>
 	<element name="EI_fellesformat">
 		<annotation>
 			<documentation>Dette er rotnoden i fellesformatet som inneholder nyttedata, mottaksblokk, sporingsinfo og eventuelt apprec </documentation>

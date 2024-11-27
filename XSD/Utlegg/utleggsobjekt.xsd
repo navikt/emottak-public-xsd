@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.sismo.no/Utleggsobjekt" 
+		xmlns:utlegg="http://www.sismo.no/Utleggsobjekt" 
+		elementFormDefault="qualified"
+		version="1.0.0">
+		
+		
+		<xsd:element name="Utleggsobjekt" type="utlegg:utleggsobjektType"/>
+		
+		<xsd:complexType name="utleggsobjektType" mixed="true">
+			<xsd:sequence>
+				<xsd:element name="objektType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="objektId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="utleggsType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="andel" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="sperretBelop" minOccurs="0" maxOccurs="1">
+					<xsd:complexType mixed="true">
+						<xsd:attribute ref="utlegg:valuta" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="slettegrunnlag" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="objektdetaljListe" minOccurs="1" maxOccurs="1">
+					<xsd:complexType mixed="true">
+						<xsd:sequence>
+							<xsd:element name="objektdetalj" minOccurs="1" maxOccurs="unbounded">
+								<xsd:complexType mixed="true">
+									<xsd:attribute ref="utlegg:betydning" use="required"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		
+
+		<xsd:attribute name="betydning" type="xsd:string"/>		
+		<xsd:attribute name="valuta" type="xsd:string"/>
+		
+</xsd:schema>

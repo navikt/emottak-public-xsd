@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- sMSIS - Konsultasjon versjon 1.0 - 2012.06.18 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.fhi.no/xml/sykdomspulsen/konsultasjon/2012-06-01" targetNamespace="http://www.fhi.no/xml/sykdomspulsen/konsultasjon/2012-06-01" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Melding">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Konsultasjon" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Takst" type="xs:token" maxOccurs="unbounded"/>
+							<xs:element name="Diagnose" type="xs:token" maxOccurs="unbounded"/>
+							<xs:element name="Pasient">
+								<xs:complexType>
+									<xs:attribute name="Kjonn" type="xs:token" use="required"/>
+									<xs:attribute name="Aldersgr" type="xs:token" use="required"/>
+									<xs:attribute name="Bosted" type="xs:token" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Id" type="xs:string" use="required"/>
+						<xs:attribute name="Konsdato" type="xs:date" use="required"/>
+						<xs:attribute name="Regdato" type="xs:date" use="required"/>
+						<xs:attribute name="BehandlerId" type="xs:string" use="required"/>
+						<xs:attribute name="PraksisType" type="xs:token" use="required"/>
+						<xs:attribute name="Lokasjon" type="xs:token" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

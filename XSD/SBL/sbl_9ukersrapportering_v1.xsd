@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.nav.no/sbl/sbl_9ukersrapportering_v1.xsd"
+           xmlns="http://www.nav.no/sbl/sbl_9ukersrapportering_v1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="DialogmoteEnRapport">
+        <xs:annotation>
+            <xs:documentation>Rapporteringsskjema fra arbeidsgiver til NAV ved 9 ukers sykmelding</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="fodselsNr" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>(A.5)Fødselsnummer (oppslag TPS, navn vises)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="bedriftsNr" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>(A.2)Bedriftsnummer (pålogging ALTINN)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="OpplBedriftOgSykemeldt">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="kontaktPerson" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>(A.3) Kontaktperson i bedriften (fritekstfelt) (obligatorisk)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="arbeidstakerNavn" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(A.4.)Arbeidstakers navn (fritekstfelt)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="OpplDialogmoteOgDeltakelse">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="dialogEnAvholdt" type="xs:boolean">
+                                <xs:annotation>
+                                    <xs:documentation>(B.1) Er dialogmøte 1 avholdt: J/N (utfylling skal være
+                                        obligatorisk)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtDato" type="xs:date" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.1) Dato for dialogmøtet</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtArbeidsplass" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.2) Møtet ble avholdt på arbeidsplassen</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtLegekontor" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.3) Møtet ble avholdt på legekontoret</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtNavkontoret" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.4) Møtet ble avholdt på NAV-kontoret</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtElektronisk" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.5) Møtet ble avholdt pr telefon/video/skype
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtSykmelderElektroniskDeltakelse" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.6) Sykmelder deltatt på telefon/video/skype
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="bedriftshelsetjenesteDeltatt" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.3.6) Bedriftshelsetjeneste deltatt</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtAnnet" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.7) Annet</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="avholdtAnnetBeskr" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.2.7) Annet (fritekst)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sykmelderInnkalt" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.3) Hvis J på spm B.1=>Ble sykmelder innkalt til dialogmøtet:
+                                        J/N
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sykmelderNavn" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.3.1) Hvis J på spm B.3 => Sykmelders navn (fritekst – kun til
+                                        kontrollformål)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="sykmelderDeltatt" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.3.2) Hvis J på spm B.3 => Har sykmelder deltatt i dialogmøtet:
+                                        J/N
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenMoteArbtakSituasjon" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.4.1) Møtet åpenbart unødvendig grunnet arbeidstakers situasjon
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenMoteArbtakSituasjonBeskr" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.4.1) Møtet åpenbart unødvendig grunnet arbeidstakers situasjon
+                                        (fritekst - utfylling skal være obligatorisk hvis det er krysset av for punktet)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenMoteArbtakIkkeMott" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.4.2) Arbeidstaker ikke møtt</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenMoteAnnet" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.4.3) Andre forhold enn arbeidstakers situasjon
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenMoteAnnetBeskr" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(B.4.3) Andre forhold enn arbeidstakers situasjon (fritekst -
+                                        utfylling skal være obligatorisk hvis det er krysset av for punktet)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="OpplOppfolgingsplan">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="oppfPlanUtarbeidet" type="xs:boolean">
+                                <xs:annotation>
+                                    <xs:documentation>(C.1) Er oppfølgingsplan utarbeidet: J/N (utfylling skal være
+                                        obligatorisk)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenOppfPlanArbtakSituasjon" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.2.1) Oppfølgingsplan er åpenbart unødvendig grunnet
+                                        arbeidstakers situasjon: J/N
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenOppfPlanArbtakSituasjonBeskr" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.2.1) Oppfølgingsplan er åpenbart unødvendig grunnet
+                                        arbeidstakers situasjon: (fritekst - utfylling skal være obligatorisk hvis det
+                                        er krysset av for punktet)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenOppfPlanArbtakIkkeMedvirket" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.2.2) Arbeidstaker har ikke medvirket til utarbeiding av
+                                        oppfølgingsplan(C.2.2) Arbeidstaker har ikke medvirket til utarbeiding av
+                                        oppfølgingsplan
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenOppfPlanAnnet" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.2.3) Andre forhold enn arbeidstakers situasjon
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ingenOppfPlanAnnetBeskr" type="xs:string" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.2.3) Andre forhold enn arbeidstakers situasjon (fritekst –
+                                        utfylling obligatorisk)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="oppfolgingsplanMottat" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.3) Er oppfølgingsplan mottatt: J/N</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="arbtakMedvirketGjennomforing" type="xs:boolean" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.4) Hvis J på spm C.1=>Har arbeidstaker medvirket til
+                                        gjennomføring av oppfølgingsplanen og eventuelle tilretteleggingstiltak: J/N
+                                        (OBS! ikke obligatorisk)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="arbtakIkkeMedvirketGjennomforingBegrunnelse" type="xs:string"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>(C.4.1) Hvis N på spm C.4 => Fritekstfelt (obligatorisk)
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

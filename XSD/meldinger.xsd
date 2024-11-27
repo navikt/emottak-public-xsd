@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/meldinger/v1" version="1.0" xmlns:meldinger="http://nav.no/ekstern/virkemiddelokonomi/tjenester/utbetaling/meldinger/v1" xmlns:utbetaling="http://nav.no/ekstern/virkemiddelokonomi/utbetaling/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://nav.no/ekstern/virkemiddelokonomi/utbetaling/v1" schemaLocation="utbetaling.xsd"/>
+  <xsd:complexType name="Bruker">
+    <xsd:sequence>
+      <xsd:element name="brukerId" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Fødselsnummer (fnr) eller D-nummer (dnr) til en person.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="brukertypeKode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Settes til PERSON.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Periode">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="fom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Fra-og-med-dato. Feltet er betinget påkrevd: dersom tom er satt, så må fom være satt&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="tom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir hvilke ytelser man ønsker å filtrere på. Tabellen under viser de ytelsene operasjonen kan returnere utbetalingsinformasjon om, og som konsument om ønskelig kan filtrere på. Merk at det man kun kan filtrere på de ytelser konsumenten har hjemmel til å hente ut. Ved filtrering på andre ytelser vil tjenesten kaste feil.&lt;/p&gt;&lt;p&gt;Gyldige ytelsestypeKoder i input &lt;/p&gt;&lt;table class="confluenceTable" border="1"&gt;&lt;col width="50.0%"&gt;&lt;/col&gt;&lt;col width="50.0%"&gt;&lt;/col&gt;&lt;tr&gt;&lt;td class="confluenceTh"&gt;&lt;p&gt;YtelsestypeKode&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTh"&gt;&lt;p&gt;Kommentar&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;ARBEIDSAVKLARINGSPENGER&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;ALDERSPENSJON&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;BARNEPENSJON&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;BARNETRYGD&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;DAGPENGER&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;ETTERLATTEPENSJON&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;FORELDREPENGER&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;KONTANTSTØTTE&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;KRIGSPENSJON&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;SUPPLERENDE_STONAD&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;SVANGERSKAPSPENGER&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;SYKEPENGER&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt;UFOREPENSJON&lt;/p&gt;&lt;/td&gt;&lt;td class="confluenceTd"&gt;&lt;p&gt; &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Ytelsesfilter">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="ytelsestypeKodeListe" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir hvilke ytelser man ønsker å filtrere på. Merk at det man kun kan filtrere på de ytelser konsumenten har hjemmel til å hente ut. Ved filtrering på andre ytelser vil tjenesten kaste feil.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FinnUtbetalingListeRequest">
+    <xsd:sequence>
+      <xsd:element name="bruker" type="meldinger:Bruker">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Angir personen det søkes data på. I søket så mappes dette feltet mot hvem utbetalingen gjelder, altså rettighetshaveren. Se meldingsobjekt Bruker under.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="hjemmelshaverKode" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Kode for å angi hvilken hjemmel som ligger til grunn for uthenting. Brukes for å filtrere hvilke ytelser og trekk aktuell konsument har tilgang til å hente ut.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="ytelsesfilter" type="meldinger:Ytelsesfilter">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Tilbyr mulighet for filtrere søket på en eller flere ytelser. Hvis filteret ikke er satt, så returneres utbetalingsinformasjon om alle ytelser som aktuell hjemmelshaver har hjemmel til å innhente informasjon om.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="posteringsperiodefilter" type="meldinger:Periode">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Tilbyr mulighet for å filtrere på en periode som utbetalingen(e) er postert. Dersom feltet ikke er satt vil operasjonen default returnere utbetalinger postert i perioden [dagens dato - 90, dagens dato].&lt;/p&gt;&lt;p&gt;Periode.fom angir at kun utbetalinger postert fra og med denne datoen skal hentes ut. Tjenesten kan maks hente ut data 3 år tilbake fra inneværende år, mao. dersom vi er inne i 2012, så kan fom tidligst være 01.01.2009.&lt;/p&gt;&lt;p&gt;Periode.tom angir at kun utbetalinger postert til og med denne datoen skal hentes ut. Nyeste/seneste tillatte dato er dagens dato.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FinnUtbetalingListeUtvidelse1">
+    <xsd:complexContent>
+      <xsd:extension base="utbetaling:Utvidelse"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FinnUtbetalingListeResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="forespurtBrukerId" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Samme verdi som brukerId i input. Feltet returneres da denne kan avvike fra det fnr/dnr som det utleveres data på dersom personen har fått endret fnr/dnr.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="utbetalingListe" type="utbetaling:Utbetaling">
+        <xsd:annotation>
+          <xsd:documentation>&lt;p&gt;Liste med utbetalinger som tilfredstiller inputkriteriene. Merk også at hvilke ytelser som er tilgjenglig for uthenting vil være ulik for ulike hjemler. Se informasjonsmodellen for beskrivelse av objektet.&lt;/p&gt;</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="utvidelse" type="meldinger:FinnUtbetalingListeUtvidelse1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

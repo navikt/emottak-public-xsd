@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by Henning Olsgård (Skatteetatens IT - og servicesenter (SITS)) -->
+<xsd:schema xmlns="urn:nav:a-nav-inntekt:v1_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="urn:nav:a-nav-inntekt:v1_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:element name="melding" type="EDAG_M"/>
+	<xsd:complexType name="EDAG_M">
+		<xsd:sequence>
+			<xsd:element name="meldingsprodukjonsinformasjon" type="Meldingsprodukjonsinformasjon" minOccurs="0"/>
+			<xsd:element name="abonnementsinformasjon" type="Abonnementsinformasjon" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder referanser til de abonnement som har interesse av informasjonen som ligger i meldingen. Meldingen er generert fordi abonnementene ønsker den.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Leveranse" type="Leveranse"/>
+			<xsd:element ref="ds:Signature" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Leveranse">
+		<xsd:sequence>
+			<xsd:element name="kalendermaaned" type="AArOgMaaned"/>
+			<xsd:element name="leveranseinformasjon" type="Leveranseinformasjon" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder en liste med referanser til de a-meldinger som danner grunnlaget for innholdet i denne leveransen.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="opplysningspliktig" type="Opplysningspliktig"/>
+			<xsd:element name="oppgave" type="JuridiskEntitet"/>
+			<xsd:element name="kilde" type="Kilde">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder identifiserende informasjon for kilden til innholdet på dette nivå. I dette tilfellet oppsumeringsdokument for opplysningpliktig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Opplysningspliktig">
+		<xsd:sequence>
+			<xsd:element name="norskIdentifikator" type="NorskIdentifikator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="JuridiskEntitet">
+		<xsd:sequence>
+			<xsd:element name="virksomhet" type="Virksomhet" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Betalingsinformasjon">
+		<xsd:sequence>
+			<xsd:element name="sumForskuddstrekk" type="BeloepSomHeltall" minOccurs="0"/>
+			<xsd:element name="sumArbeidsgiveravgift" type="BeloepSomHeltall" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="DatoTid">
+		<xsd:restriction base="xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AArOgMaaned">
+		<xsd:restriction base="xsd:gYearMonth"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Tekst">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NorskIdentifikator">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Heltall">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Leveranseinformasjon">
+		<xsd:sequence>
+			<xsd:element name="altinnreferanse" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>Id tildelt av Altinn ved innlevering av melding. Globalt unik</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="innleveringstidspunkt" type="DatoTid">
+				<xsd:annotation>
+					<xsd:documentation>Tispunkt for når aktuell melding ble innlevertlevert til altInn </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="meldingsId" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>En id gitt av opplysningspliktig. Utgjør sammen med kildesystem en unik referanse mot opplysningspliktige systemer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kildesystem" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>En id gitt av opplysningspliktig. Utgjør sammen med meldingsId en unik referanse mot opplysningspliktige systemer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Kilde">
+		<xsd:annotation>
+			<xsd:documentation>Beskriver kilden til informasjon på et gitt nivå</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="kildereferanse" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder en unik id som identifiserer dokumentet eller kilden til innholdet på dette nivå.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kildenavn" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder navnet til dokumentet som danner grunnlaget for innholdet på dette nivå. Legg merke til at et navngitt dokument kan ha flere versjoner.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kildeversjon" type="Heltall">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder versjonsnummer til dokumentetet som danner grunnlag for denne leveransen. Høyeste versjon et dokument  representerer den sist oppdaterte informasjonen. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="slettet" type="Boolsk" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder informasjon om dokumentet er slettet. Dersom et dokument oppører å eksistere så vil det bli laget en ny versjon av dokumentet som er 'slettet'. Dette betyr at dersom høyeste kjente versjon av et dokument har status slettet, så finnes det ikke lenger et aktivt dokument. Legg merke til at det kan komme nye versjoner av samme dokument som 'opphever' slettingen, mao et dokument med et gitt navn kan gå inn i tilstand slettet for deretter å vende tilbake til en ikke slettet tilstand.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Avvik">
+		<xsd:sequence>
+			<xsd:element name="id" type="Tekst"/>
+			<xsd:element name="navn" type="Tekst"/>
+			<xsd:element name="alvorlighetsgrad" type="Alvorlighetsgrad"/>
+			<xsd:element name="detaljer" type="Tekst" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Virksomhet">
+		<xsd:sequence>
+			<xsd:element name="norskIdentifikator" type="NorskIdentifikator"/>
+			<xsd:element name="inntektsmottaker" type="Inntektsmottaker" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Inntektsmottaker">
+		<xsd:sequence>
+			<xsd:element name="norskIdentifikator" type="NorskIdentifikator" minOccurs="0"/>
+			<xsd:element name="internasjonalIdentifikator" type="InternasjonalIdentifikator" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="identifiserendeInformasjon" type="IdentifiserendeInformasjon" minOccurs="0"/>
+			<xsd:element name="arbeidsforhold" type="Arbeidsforhold" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="fradrag" type="Fradrag" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="forskuddstrekk" type="Forskuddstrekk" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="inntekt" type="Inntekt" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="kilde" type="Kilde">
+				<xsd:annotation>
+					<xsd:documentation>Inneholder identifiserende informasjon for kilden til innholdet på dette nivå. I dette tilfellet oppsumeringsdokument for inntektsmottaker.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InternasjonalIdentifikator">
+		<xsd:sequence>
+			<xsd:element name="identifikator" type="Tekst"/>
+			<xsd:element name="identifikatortype" type="InternasjonalIdentifikatortype"/>
+			<xsd:element name="land" type="Landkode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="InternasjonalIdentifikatortype">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Landkode">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="IdentifiserendeInformasjon">
+		<xsd:sequence>
+			<xsd:element name="navn" type="Tekst"/>
+			<xsd:element name="adresse" type="GenerellAdresse"/>
+			<xsd:element name="foedselsdato" type="Dato"/>
+			<xsd:element name="ansattnummer" type="Tekst" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GenerellAdresse">
+		<xsd:sequence>
+			<xsd:element name="adressetekst" type="Tekst" minOccurs="0"/>
+			<xsd:element name="poststed" type="Poststed" minOccurs="0"/>
+			<xsd:element name="landkode" type="Landkode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Poststed">
+		<xsd:sequence>
+			<xsd:element name="postnummer" type="Postnummer" minOccurs="0"/>
+			<xsd:element name="poststedsnavn" type="Tekst" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Arbeidsforhold">
+		<xsd:sequence>
+			<xsd:element name="arbeidsforholdId" type="Tekst" minOccurs="0"/>
+			<xsd:element name="typeArbeidsforhold" type="Arbeidsforholdstype"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Arbeidsforholdstype">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Fradrag">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="Fradragsbeskrivelse"/>
+			<xsd:element name="beloep" type="Beloep"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Fradragsbeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Forskuddstrekk">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="Forskuddstrekksbeskrivelse" minOccurs="0"/>
+			<xsd:element name="beloep" type="BeloepSomHeltall"/>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Forskuddstrekksbeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Inntekt">
+		<xsd:sequence>
+			<xsd:element name="skatteOgAvgiftsregel" type="SkatteOgAvgiftsregel" minOccurs="0"/>
+			<xsd:element name="startdatoOpptjeningsperiode" type="Dato" minOccurs="0"/>
+			<xsd:element name="sluttdatoOpptjeningsperiode" type="Dato" minOccurs="0"/>
+			<xsd:element name="fordel" type="Fordel"/>
+			<xsd:element name="beloep" type="Beloep"/>
+			<xsd:element name="arbeidsforholdId" type="Tekst" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element name="loennsinntekt" type="Loennsinntekt" minOccurs="0"/>
+				<xsd:element name="ytelseFraOffentlige" type="YtelseFraOffentlige" minOccurs="0"/>
+				<xsd:element name="pensjonEllerTrygd" type="PensjonEllerTrygd" minOccurs="0"/>
+				<xsd:element name="naeringsinntekt" type="Naeringsinntekt" minOccurs="0"/>
+			</xsd:choice>
+			<xsd:element name="avvik" type="Avvik" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SkatteOgAvgiftsregel">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Fordel">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Loennsinntekt">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="Loennsbeskrivelse"/>
+			<xsd:element name="tilleggsinformasjon" type="Tilleggsinformasjon" minOccurs="0"/>
+			<xsd:element name="spesifikasjon" type="Spesifikasjon" minOccurs="0"/>
+			<xsd:element name="antall" type="Desimaltall" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Loennsbeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Tilleggsinformasjon">
+		<xsd:choice>
+			<xsd:element name="barnepensjonOgUnderholdsbidrag" type="BarnepensjonOgUnderholdsbidrag" minOccurs="0"/>
+			<xsd:element name="bilOgBaat" type="BilOgBaat" minOccurs="0"/>
+			<xsd:element name="bonus" type="Bonus" minOccurs="0"/>
+			<xsd:element name="dagmammaIEgenBolig" type="DagmammaIEgenBolig" minOccurs="0"/>
+			<xsd:element name="etterbetalingsperiode" type="Periode" minOccurs="0"/>
+			<xsd:element name="fondForIdrettsutoevere" type="FondForIdrettsutoevere" minOccurs="0"/>
+			<xsd:element name="inntektPaaNorskKontinentalsokkel" type="NorskKontinentalsokkel" minOccurs="0"/>
+			<xsd:element name="inntjeningsforhold" type="SpesielleInntjeningsforhold" minOccurs="0"/>
+			<xsd:element name="livrente" type="Livrente" minOccurs="0"/>
+			<xsd:element name="lottOgPart" type="LottOgPartInnenFiske" minOccurs="0"/>
+			<xsd:element name="nettoloenn" type="Nettoloennsordning" minOccurs="0"/>
+			<xsd:element name="pensjon" type="AldersUfoereEtterlatteAvtalefestetOgKrigspensjon" minOccurs="0"/>
+			<xsd:element name="reiseKostOgLosji" type="ReiseKostOgLosji" minOccurs="0"/>
+			<xsd:element name="svalbardinntekt" type="Svalbardinntekt" minOccurs="0"/>
+			<xsd:element name="utenlandskArtist" type="UtenlandskArtist" minOccurs="0"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="BarnepensjonOgUnderholdsbidrag">
+		<xsd:sequence>
+			<xsd:element name="forsoergersFoedselsnummer" type="Foedselsnummer" minOccurs="0"/>
+			<xsd:element name="tidsrom" type="Periode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Periode">
+		<xsd:sequence>
+			<xsd:element name="startdato" type="Dato"/>
+			<xsd:element name="sluttdato" type="Dato"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BilOgBaat">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="Bonus">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="DagmammaIEgenBolig">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="FondForIdrettsutoevere">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="NorskKontinentalsokkel">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:simpleType name="SpesielleInntjeningsforhold">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Livrente">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="LottOgPartInnenFiske">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:simpleType name="Naturalytelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Nettoloennsordning">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="AldersUfoereEtterlatteAvtalefestetOgKrigspensjon">
+		<xsd:sequence>
+			<xsd:element name="grunnpensjonsbeloep" type="Beloep" minOccurs="0"/>
+			<xsd:element name="tilleggspensjonsbeloep" type="Beloep" minOccurs="0"/>
+			<xsd:element name="ufoeregrad" type="Heltall" minOccurs="0"/>
+			<xsd:element name="pensjonsgrad" type="Heltall" minOccurs="0"/>
+			<xsd:element name="heravEtterlattepensjon" type="Beloep" minOccurs="0"/>
+			<xsd:element name="tidsrom" type="Periode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReiseKostOgLosji">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:simpleType name="Boligtype">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Svalbardinntekt">
+		<xsd:sequence>
+			<xsd:element name="antallDager" type="Heltall"/>
+			<xsd:element name="betaltTrygdeavgift" type="Beloep" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UtenlandskArtist">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="Spesifikasjon">
+		<xsd:sequence>
+			<xsd:element name="skattemessigBosattILand" type="Landkode" minOccurs="0"/>
+			<xsd:element name="opptjeningsland" type="Landkode" minOccurs="0"/>
+			<xsd:element name="erOpptjentPaaHjelpefartoey" type="Boolsk" minOccurs="0"/>
+			<xsd:element name="erOpptjentPaaKontinentalsokkel" type="Boolsk" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="YtelseFraOffentlige">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="YtelseFraOffentligeBeskrivelse"/>
+			<xsd:element name="tilleggsinformasjon" type="Tilleggsinformasjon" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Enn så lenge så rapporteres det ikke inn data på dette elementet. Det vil først skje når tilsvarende element legges på a-meldingen</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="YtelseFraOffentligeBeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="PensjonEllerTrygd">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="PensjonEllerTrygdebeskrivelse"/>
+			<xsd:element name="tilleggsinformasjon" type="Tilleggsinformasjon" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="PensjonEllerTrygdebeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Naeringsinntekt">
+		<xsd:sequence>
+			<xsd:element name="beskrivelse" type="Naeringsinntektsbeskrivelse"/>
+			<xsd:element name="tilleggsinformasjon" type="Tilleggsinformasjon" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Naeringsinntektsbeskrivelse">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Beloep">
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Alvorlighetsgrad">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="avvisning"/>
+			<xsd:enumeration value="oeyeblikkelig"/>
+			<xsd:enumeration value="retningslinje"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Dato">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Desimaltall">
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="BeloepSomHeltall">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Boolsk">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Foedselsnummer">
+		<xsd:restriction base="RestriksjonFoedselsnummer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestriksjonFoedselsnummer">
+		<xsd:restriction base="xsd:token">
+			<xsd:length value="11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AArstall">
+		<xsd:restriction base="xsd:gYear"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Postnummer">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Meldingsprodukjonsinformasjon">
+		<xsd:annotation>
+			<xsd:documentation>Inneholder informasjon som er relatert til produksjonen av denne meldingen</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="meldingsproduksjonsreferanse" type="Tekst">
+				<xsd:annotation>
+					<xsd:documentation>Unik id som identifiserer prosessen som har produsert denne meldingen</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="antallDelmeldingerProdusertTotalt" type="Heltall">
+				<xsd:annotation>
+					<xsd:documentation>Antallet meldinger (filer) som ble produsert i forbindelse med angitt meldingsproduksjon</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="delmeldingsnummer" type="Heltall">
+				<xsd:annotation>
+					<xsd:documentation>Forteller hvilken delmelding dette er. En fullstending meldingsproduksjon vil inneholde delmeldingsnummer fom 1 tom antallDelmeldingerProdusertTotalt</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Abonnementsinformasjon">
+		<xsd:sequence>
+			<xsd:element name="abonnementsId" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

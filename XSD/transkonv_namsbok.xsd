@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.sismo.no/transkonv_namsbok" 
+			xmlns:namsbok="http://www.sismo.no/transkonv_namsbok" 
+			xmlns:aktor="http://www.sismo.no/aktor"
+			xmlns:transaksjon="http://www.sismo.no/transaksjon"	
+			xmlns:tilleggsinfo="http://www.sismo.no/tilleggsinfo" 
+			xmlns:utlegg="http://www.sismo.no/Utleggsobjekt"
+			xmlns:ref="http://www.sismo.no/Referanser"
+			xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+			elementFormDefault="qualified"
+			version="1.0.1">
+		
+	<xsd:import schemaLocation="aktor.xsd" namespace="http://www.sismo.no/aktor"/>
+	<xsd:import schemaLocation="transaksjon.xsd"  namespace="http://www.sismo.no/transaksjon" />
+	<xsd:import schemaLocation="utleggsobjekt.xsd" namespace="http://www.sismo.no/Utleggsobjekt"/>
+	<xsd:import schemaLocation="tilleggsinfo.xsd"  namespace="http://www.sismo.no/tilleggsinfo" />
+	<xsd:import schemaLocation="referanser.xsd"  namespace="http://www.sismo.no/Referanser" />
+	<xsd:import schemaLocation="xmldsig-core-schema.xsd"  namespace="http://www.w3.org/2000/09/xmldsig#" />
+	
+
+	<xsd:element name="Namsbok">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ref:Referanser" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="namsbok:aktorgruppe" minOccurs="1" maxOccurs="unbounded"/>
+				<xsd:element ref="namsbok:transaksjoner" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="namsbok:utleggsobjektListe" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="tilleggsinfo:Tilleggsinfoliste" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="namsbok:lopenummer" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+
+	
+	<xsd:element name="aktorgruppe" type="namsbok:aktorgruppeType" />
+	<xsd:element name="transaksjoner" type="namsbok:transaksjonslisteType" />
+	<xsd:element name="utleggsobjektListe" type="namsbok:utleggsobjektListeType" />
+	<xsd:element name="lopenummer" type="xsd:string"/>
+	
+	<xsd:complexType name="transaksjonslisteType">
+		<xsd:sequence>
+			<xsd:element ref="transaksjon:Transaksjon" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="aktorgruppeType">
+		<xsd:sequence>
+			<xsd:element ref="aktor:Aktor" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="aktorRolle" type="xsd:string"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="utleggsobjektListeType" mixed="true">
+		<xsd:sequence>
+		<xsd:element ref="utlegg:Utleggsobjekt" minOccurs="1" maxOccurs="unbounded"/>		
+		</xsd:sequence>
+	</xsd:complexType>
+	 
+	<xsd:attribute name="betydning" type="xsd:string"/>
+	
+</xsd:schema>

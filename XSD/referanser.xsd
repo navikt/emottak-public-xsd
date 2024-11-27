@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.sismo.no/Referanser" 
+		xmlns:ref="http://www.sismo.no/Referanser" 
+		elementFormDefault="qualified"
+		version="1.0.0">
+	
+	<xsd:element name="Referanser">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ref:meldingsId" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="ref:meldingsRef" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="ref:meldingsDato" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="ref:deresRef" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="ref:vaarRef" minOccurs="0" maxOccurs="1"/>
+				<xsd:element ref="ref:referanseDato" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="meldingsId" type="ref:meldingsIdType"/>
+	<xsd:element name="meldingsRef" type="ref:meldingsRefType"/>
+	<xsd:element name="meldingsDato" type="xsd:date"/>	
+	<xsd:element name="deresRef" type="ref:deresRefType"/>
+	<xsd:element name="vaarRef" type="ref:vaarRefType"/>	
+	<xsd:element name="referanseDato" type="xsd:date"/>
+	
+	<xsd:simpleType name="meldingsIdType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="meldingsRefType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="deresRefType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="vaarRefType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+</xsd:schema>

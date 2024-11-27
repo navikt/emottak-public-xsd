@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<xs:schema targetNamespace="http://www.nav.no/xml/eiff/2/" xmlns:nd="http://www.nav.no/xml/NavDokument/1/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ff="http://www.nav.no/xml/eiff/2/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mh="http://www.kith.no/xmlstds/msghead/2006-05-24" xmlns:app="http://www.kith.no/xmlstds/apprec/2004-11-21" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.kith.no/xmlstds/apprec/2004-11-21" schemaLocation="AppRec-v1-2004-11-21.xsd"/>
+	<xs:import namespace="http://www.kith.no/xmlstds/msghead/2006-05-24" schemaLocation="MsgHead-v1_2.xsd"/>
+	<xs:import namespace="http://www.nav.no/xml/NavDokument/1/" schemaLocation="./NAV-Dokument V.02.xsd"/>
+	<xs:element name="EI_fellesformat">
+		<xs:annotation>
+			<xs:documentation>Dette er rotnoden i fellesformatet som inneholder nyttedata, mottaksblokk, sporingsinfo og eventuelt apprec </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="nd:NavInnDokument"/>
+					<xs:element ref="mh:MsgHead"/>
+					<xs:element ref="app:AppRec"/>
+					<xs:element name="Content">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:restriction base="anyType">
+									<xs:sequence>
+										<xs:any processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:restriction>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element ref="nd:NavArkivDokument"/>
+				<xs:element name="MottakenhetBlokk" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Dette elementet innholder den informasjon og de data som genereres i mottaket og som sendes med for videre behandling innnover i systemet.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ff:MottakenhetBlokk_type"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MottakenhetBlokk_type">
+		<xs:annotation>
+			<xs:documentation>Denne blokken inneholder informasjon generert i mottaket.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ediLoggId" use="optional">
+			<xs:annotation>
+				<xs:documentation>En identifikator til en logg i mottaket som er slik at med denne kan man spore denne meldingen tilbake til avsender.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="avsender" type="string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er mottakets referanse for aa senere kunne finne tilbake til rett avsender av denne meldingen</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ebXMLSamtaleId" type="string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er ebXML meldingens correlation id (samtale id) som er unik for alle xml meldinger og svar med opphav i  samme melding.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mottaksId" type="string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er ebXML-konvoluttens mottaksid.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsType" type="string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Denne attributten viser den opprinnelige meldingens meldingstype.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="avsenderRef" type="string" use="optional"/>
+		<xs:attribute name="avsenderFnrFraDigSignatur" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette feltet inneholder fnr. til avsender av meldingen slik avsender er identifisert gjennom sin digitale signatur.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:minLength value="11"/>
+					<xs:maxLength value="11"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="mottattDatotid" type="dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation>tidspunkt melding ble tatt til behandling av mottaket.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="orgNummer" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:minLength value="9"/>
+					<xs:maxLength value="9"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="avsenderOrgNrFraDigSignatur" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder orgnummer hentet fra DN i virksomhetsertifikat brukt for signering av melding.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:minLength value="9"/>
+					<xs:maxLength value="9"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="partnerReferanse" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder referranse til partner som ikke er helseforetak.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="herIdentifikator" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder referranse til helseforetak.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebRole" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder ebXML Role parameter ( Fra_Role ).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebService" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder ebXML Service parameter.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebAction" use="optional">
+			<xs:annotation>
+				<xs:documentation>Inneholder ebXML Action parameter.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

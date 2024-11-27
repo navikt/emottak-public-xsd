@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+NAV Ebrev abonnementtjenester
+Versjon 1.0
+2010-02-01
+ -->
+<xs:schema xmlns="http://www.kith.no/xmlstds/nav/ebrev/2010-02-01" xmlns:fk1="http://www.kith.no/xmlstds/felleskomponent1" xmlns:ebr="http://www.kith.no/xmlstds/nav/ebrev/2010-02-01" xmlns:tokt="http://www.kith.no/xmlstds/nav/tokt/2010-02-01" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:kith="http://www.kith.no/xmlstds" targetNamespace="http://www.kith.no/xmlstds/nav/ebrev/2010-02-01" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.kith.no/xmlstds/felleskomponent1" schemaLocation="../felles/felleskomponent1.xsd"/>
+	<xs:import namespace="http://www.kith.no/xmlstds" schemaLocation="../felles/kith.xsd"/>
+	<xs:element name="EbrevForesporsel">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="HentSamhandlerAdresser">
+					<xs:annotation>
+						<xs:documentation>Forespørsel om alle samhandlers adresser for alle registrerte avdelinger/praksiser. Returnerer med meldingen EbrevSamhandlerAdresser</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Ident" type="fk1:Ident">
+								<xs:annotation>
+									<xs:documentation>Ident inneholder normalt fødselsnummer, men en av de andre identifkasjonstyper som DNR,HPS etc. kan benyttes</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StartAbonnement" type="EbrevParamType">
+					<xs:annotation>
+						<xs:documentation>Forspørsel om start av Abonnement på en organisasjonsenhet (avdeling/praksis) identifisert med en TSSId som oppgitt i EbrevSamhandlerAdresser. Svarer med en EbrevAbonnentStatus melding </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StoppAbonnement" type="EbrevParamType">
+					<xs:annotation>
+						<xs:documentation>Forspørsel om stopp av Abonnement på en organisasjonsenhet (avdeling/praksis) identifisert med en TSSId som oppgitt i EbrevSamhandlerAdresser. Svarer med en EbrevAbonnentStatus melding </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="HentAbonnementStatus" type="EbrevParamType">
+					<xs:annotation>
+						<xs:documentation>Forspørsel om abonnement status på en organisasjonsenhet (avdeling/praksis) identifisert med en TSSId som oppgitt i EbrevSamhandlerAdresser. Svarer med en EbrevAbonnentStatus melding </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TestEbrev">
+					<xs:annotation>
+						<xs:documentation>Forspørsel om å få tilsendt ett testbrev til en organisasjonsenhet (avdeling/praksis) identifisert med en TSSId som det abonneres på. Svarer umidelbart med en applikasjonskvittering. Deretter følger et test dokumentasynkront  i en egen melding</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="EbrevParamType">
+								<xs:sequence>
+									<xs:element name="PasientFnr" type="xs:string" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Når pasientFnr er oppgitt vil testbrevet påføres pasinetFnr i retur og kan langis i pasientens Journal. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EbrevSamhandlerAdresser">
+		<xs:annotation>
+			<xs:documentation>Svarmelding på HentSamhandlerAdresser</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SamhandlerNavn"/>
+				<xs:element name="Organisasjonsenhet" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>En Samhandler kan ha en eller  flere avdelinger eller praksiser. Et Ebrev abonnement knyttes til en organisasjonsenhet med TSSID </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Orgnavn" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Navn på avdeling eller praksis</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TSSId" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>En ekstern id i Nav's samhandlersystem. Alle som samhandler med Nav  er registret   </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="HerId" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Løsningen er forberedt for bruk av HER id</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AktivtAbonnement" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>True når det er aktivt abonnement </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AbonnementStatus" type="AbonnementStatusType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Dersom det  finens et aktivt abonnement vil AbonnementStatus inkluderes i meldingen</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Adresse" type="fk1:Address" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>En eller flere adresser som er registrert på organisasjonsenheten.  Adressen er inkludert for å nærmere identifisere organisasjonsenheten.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EbrevAbonnementStatus">
+		<xs:annotation>
+			<xs:documentation>Statusmelding på Ebrev abonnement</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Status" type="AbonnementStatusType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="EbrevParamType">
+		<xs:sequence>
+			<xs:element name="Ident" type="fk1:Ident">
+				<xs:annotation>
+					<xs:documentation>Samhandlers fødselsnummer( FNR) eller annen id skal alltid oppgis. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TSSId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TSS id som returnert i svaret  fra HentSamhandlerAdresser skal oppgis.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HerId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Meldingen er forberedt for HerId, men HerId er foreløpig ikke tatt i bruk.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Felleskomponent TOKT -->
+	<xs:complexType name="AbonnementStatusType">
+		<xs:sequence>
+			<xs:element name="Statuskode" type="kith:CS">
+				<xs:annotation>
+					<xs:documentation>Abonnementstatus har en av følgende verdier: Aktiv, Inaktiv, Ingen data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SistEndret" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tidspunkt når abonnementet  er oppretett eller sist endret </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SluttDato" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dersom abonnementet er inaktivt sier sluttdato når abonnementet er avsluttet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

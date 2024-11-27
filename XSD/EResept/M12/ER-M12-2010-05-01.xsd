@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+eResept versjon 2.4
+M12 Søknadssvar - Individuell søknad om refusjon til HELFO
+2010-05-01
+ -->
+<schema xmlns:m2="http://www.kith.no/xmlstds/eresept/m12/2010-05-01" xmlns:kith="http://www.kith.no/xmlstds" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.kith.no/xmlstds/eresept/m12/2010-05-01" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.kith.no/xmlstds" schemaLocation="../felles/kith.xsd"/>
+	<element name="SoknadsvarHelfo">
+		<complexType>
+			<sequence>
+				<element name="Svar-ID" type="string"/>
+				<element name="RefSoknad" type="string"/>
+				<element name="Beslutning" type="kith:CS"/>
+				<element name="Begrunnelse" type="string" minOccurs="0"/>
+				<element name="Beslutningsdato" type="date"/>
+				<element name="DoseDognMaks" type="kith:PQ" minOccurs="0"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
